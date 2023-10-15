@@ -1,5 +1,16 @@
+beautifulsoup4==4.12.2
 certifi==2023.7.22
+cffi==1.15.1
 charset-normalizer==3.2.0
 idna==3.4
+pyalsaaudio==0.10.0
+PyAudio==0.2.13
+pycparser==2.21
+python-vlc==3.0.18122
 requests==2.31.0
+ru-word2number==1.1
+sounddevice==0.4.6
+soupsieve==2.5
+SpeechRecognition==3.10.0
 urllib3==2.0.4
+wikipedia==1.4.0
