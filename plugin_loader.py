@@ -78,7 +78,6 @@ def check_values(dictionary, string):
     return None
 
 
-
 def load_plugin(plugin_name, command):
     """
     Функция для импорта плагина как модуля питона
@@ -95,9 +94,9 @@ def load_plugin(plugin_name, command):
     run = my_plugin.main(command)  # вызов функции main из импортированного модуля
     return run
 
+
 def main(command):
     triggers = get_triggers()
-
 
     # plugin_name = find_key(triggers, command)
     plugin_name = check_values(triggers, command)
