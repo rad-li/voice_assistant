@@ -1,18 +1,19 @@
 """ Голосовой ассистент """
 
 __author__ = 'rad-li'
-__version__ = 0.2
+__version__ = 0.3
 
+
+import speech_recognition
 import subprocess
-# import speech_recognition
-# import sounddevice
 import plugin_loader
+import stt
 
 
 # Создание объекта Recognizer
-# sr = speech_recognition.Recognizer()
+sr = speech_recognition.Recognizer()
 # Установка порога простоя для остановки записи
-# sr.pause_threshold = 0.5
+sr.pause_threshold = 0.5
 
 
 def replace_non_alphanumeric(string):
@@ -28,21 +29,16 @@ def replace_non_alphanumeric(string):
 
 
 def listen_command():
-    # """Функция распознает голосовую команду и возвращает текстовую строку"""
-    #
-    # try:
-    #     with speech_recognition.Microphone() as mic:
-    #         sr.adjust_for_ambient_noise(source=mic, duration=0.9) # удаление посторонних шумов
-    #         audio = sr.listen(source=mic)
-    #         query = sr.recognize_google(audio_data=audio, language='ru-RU').lower()
-    #
-    #     return query
-    #
-    # except speech_recognition.UnknownValueError:
-    #     pass
 
-    """Принимает строку от пользователя и возвращает ее в нижнем регистре"""
-    return ' '.join(input().lower().split())
+    """ Функция вызывает модуль stt из файла stt.py и возвращает распознанный текст"""
+    text = stt.main()
+
+    if text != "":
+        return text
+
+    # если закомментировать предыдущие три строки кода и раскомментировать строку 41,
+    # общение с ассистентом будет происходить в текстовом режиме
+    # return ' '.join(input().lower().split())
 
 
 def say_message(message):
@@ -52,7 +48,6 @@ def say_message(message):
     subprocess.run(["mplayer", "-really-quiet", "-nolirc",
                     'http://tts.voicetech.yandex.net/tts?format=mp3&quality=hi&lang=ru_RU&text='+message])
 
-
 if __name__ == "__main__":
 
     # запускаем бесконечный цикл
@@ -61,6 +56,7 @@ if __name__ == "__main__":
 
         # команда пользователя
         command = listen_command()
+        # print(command)
 
         if command is not None:
             say_message(plugin_loader.main(replace_non_alphanumeric(command)))
