@@ -8,7 +8,7 @@ import speech_recognition
 import subprocess
 import plugin_loader
 import stt
-
+import gstt
 
 # Создание объекта Recognizer
 sr = speech_recognition.Recognizer()
@@ -30,13 +30,16 @@ def replace_non_alphanumeric(string):
 
 def listen_command():
 
-    """ Функция вызывает модуль stt из файла stt.py и возвращает распознанный текст"""
-    text = stt.main()
+    """ Функция вызывает модуль распознавания речи и возвращает распознанный текст"""
+
+    # здесь можно выбрать офлайн или онлайн распознавание
+    # text = stt.main()  # офлайн распознавание с помощью vosk
+    text = gstt.main() # онлайн распознавание с помощью google
 
     if text != "":
         return text
 
-    # если закомментировать предыдущие три строки кода и раскомментировать строку 41,
+    # если закомментировать предыдущие строки кода и раскомментировать строку 44,
     # общение с ассистентом будет происходить в текстовом режиме
     # return ' '.join(input().lower().split())
 
@@ -55,7 +58,7 @@ if __name__ == "__main__":
     while True:
 
         # команда пользователя
-        command = listen_command()
+        command = listen_command().lower()
         # print(command)
 
         if command is not None:
